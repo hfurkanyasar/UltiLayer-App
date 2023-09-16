@@ -8,7 +8,7 @@ namespace NLayer.Core.Repositories
 
         //queryable olması sorgunun kullanılırken orderby tolist vs. kullanımı olması için
         // taki enumarable komutu verilene kadar(tolistasync).
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expresion);
+        IQueryable<T> GetAll();
 
         IQueryable<T> Where(Expression<Func<T, bool>> expresion);
 

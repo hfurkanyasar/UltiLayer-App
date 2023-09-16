@@ -36,7 +36,7 @@ namespace NLayer.Repository.Repositories
             return await _dbSet.AnyAsync(expresion);
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> expresion)
+        public IQueryable<T> GetAll()
         {
             // çekmiş oldugu datayı memeorye almasın demek asnotracking.
             return _dbSet.AsNoTracking().AsQueryable();

@@ -13,9 +13,9 @@ namespace NLayer.Core.Services
 
         Task<bool> AnyAsync(Expression<Func<T, bool>> expresion);
 
-        Task AddAsync(T entity);
+        Task<T> AddAsync(T entity);
 
-        Task AddRangeAsync(IEnumerable<T> entities);
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
 
         Task UpdateAsync(T entity);
 
