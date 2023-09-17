@@ -19,6 +19,7 @@ namespace NLayer.API.MiddleWares
                     var statusCode = execpitonFeature.Error switch
                     {
                         ClientSideException => 400,
+                        NotFoundException => 404,
                         _ => 500
 
                     };

@@ -14,11 +14,11 @@ namespace NLayer.API.Controllers
 
         private readonly IProductService _service;
 
-        public ProductsController(IProductService productService,IMapper mapper, IService<Product> service)
+        public ProductsController(IMapper mapper,IProductService service)
         {
             _mapper = mapper;
 
-           _service = productService;
+           _service = service;
         }
 
         [HttpGet("[action]")]
@@ -38,7 +38,7 @@ namespace NLayer.API.Controllers
             return CreateActionResult(CustomResponseDTO<List<ProductDTO>>.Succes(200, productDTOs));
         }
 
-
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
         {
