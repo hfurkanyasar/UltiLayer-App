@@ -1,0 +1,25 @@
+﻿@model List<ProductWithCategoryDTO>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Stock</td>
+            <td>Category</td>
+            <td>CreatedDate</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Stock</td>
+                <td>@item.Category.Name</td>
+                <td>@item.CreatedDate</td>
+            </tr>
+        }
+    </thead>
+</table>

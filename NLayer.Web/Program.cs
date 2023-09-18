@@ -1,8 +1,32 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using NLayer.Repository;
+using NLayer.Service.Mapping;
+using NLayer.Service.Validations;
+using NLayer.Web.Modules;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(a => a.RegisterValidatorsFromAssemblyContaining<ProductDTOValidation>()); ;
+builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddDbContext<AppDbContext>(x =>
+{
+    x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), options =>
+    {
+        options.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
+    });
+});
 
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+//autofacile module yazdýk buraya tanýmladýk.
+builder.Host.ConfigureContainer<ContainerBuilder>(ctr => ctr.RegisterModule(new RepoServiceModule()));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

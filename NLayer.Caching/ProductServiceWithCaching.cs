@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Caching.Memory;
 using NLayer.Core.DTOs;
 using NLayer.Core.Models;
@@ -9,12 +7,7 @@ using NLayer.Core.Repositories;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
 using NLayer.Service.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Caching
 {
@@ -77,11 +70,11 @@ namespace NLayer.Caching
             return Task.FromResult(prod);
         }
 
-        public Task<CustomResponseDTO<List<ProductWithCategoryDTO>>> GetProductsWithCategory()
+        public Task<List<ProductWithCategoryDTO>> GetProductsWithCategory()
         {
             var prod = _memoryCache.Get<IEnumerable<Product>>(CacheProductKey);
             var prodDTO = _mapper.Map<List<ProductWithCategoryDTO>>(prod);
-            return Task.FromResult(CustomResponseDTO<List<ProductWithCategoryDTO>>.Succes(200, prodDTO));
+            return Task.FromResult(prodDTO);
         }
 
         public async Task RemoveAsync(Product entity)

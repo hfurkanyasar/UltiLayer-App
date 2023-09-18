@@ -42,7 +42,7 @@ namespace NLayer.Service.Services
             return await _repository.GetAll().ToListAsync();
         }
 
-        public async Task<T> GetByIDAsync(int id) 
+        public async Task<T> GetByIDAsync(int id)
         {
             var hasProd = await _repository.GetByIDAsync(id);
             if (hasProd == null)
