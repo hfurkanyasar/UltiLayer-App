@@ -17,6 +17,64 @@ namespace NLayer.Repository
 
         public DbSet<ProductFeature> ProductFeatures { get; set; }
 
+
+        public override int SaveChanges()
+        {
+            foreach (var item in ChangeTracker.Entries())
+            {
+                if (item.Entity is BaseEntity entityReferans)
+                {
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            {
+                                entityReferans.CreatedDate = DateTime.Now;
+                                break;
+                            }
+                        case EntityState.Modified:
+                            {
+                                entityReferans.UpdateDate = DateTime.Now;
+                                break;
+
+                            }
+                    }
+                }
+            }
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+
+
+            //savechanges metodunu ezerek upadte ve cratedatelerini güncelleyeceğiz.
+
+
+            foreach (var item in ChangeTracker.Entries())
+            {
+                if (item.Entity is BaseEntity entityReferans)
+                {
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            {
+                                entityReferans.CreatedDate = DateTime.Now;
+                                break;
+                            }
+                        case EntityState.Modified:
+                            {
+                                Entry(entityReferans).Property(a => a.CreatedDate).IsModified = false;
+
+                                entityReferans.UpdateDate = DateTime.Now;
+                                break;
+
+                            }
+                    }
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // assemblylere git tüm ınterfacelere gitsin uygulasın. tek tek verebiliriz ama çok olursa sıkıntı

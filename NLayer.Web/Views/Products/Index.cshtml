@@ -1,14 +1,17 @@
 ﻿@model List<ProductWithCategoryDTO>
 
-<table class="table table-striped">
+<table class="table table-striped table-responsive">
+   
     <thead>
         <tr>
+            <a class="btn btn-primary" asp-controller="Products" asp-action="Save">Save</a>
             <td>ID</td>
             <td>Name</td>
             <td>Price</td>
             <td>Stock</td>
             <td>Category</td>
             <td>CreatedDate</td>
+            <td class="text-center">Actions</td>
         </tr>
         @foreach (var item in Model)
         {
@@ -19,6 +22,15 @@
                 <td>@item.Stock</td>
                 <td>@item.Category.Name</td>
                 <td>@item.CreatedDate</td>
+                <td class="text-center" style="text-align: right;">
+                    <a class="btn btn-warning" asp-controller="Products" asp-action="Update" asp-route-id="@item.ID" style=" text-align: center;">Update</a>
+                    <a class="btn btn-danger" asp-controller="Products" asp-action="Remove" asp-route-id="@item.ID" style="float: right; text-align: center;">Delete</a>
+                </td>
+
+
+
+
+
             </tr>
         }
     </thead>
