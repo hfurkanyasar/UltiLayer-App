@@ -78,5 +78,9 @@ namespace NLayer.API.Controllers
             return CreateActionResult(CustomResponseDTO<NoContentDTO>.Succes(204));
 
         }
+
+      
+
+
     }
 }
